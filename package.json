@@ -1,0 +1,30 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon --exec \"mocha -R min\"",
+    "dev": "nodemon index.js",
+    "reset-db":"node ./seed/seed.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.16.0",
+    "cors": "^2.8.1",
+    "express": "^4.14.1",
+    "jwt-simple": "^0.5.1",
+    "mongoose": "^4.8.1",
+    "morgan": "^1.8.0",
+    "nodemon": "^1.11.0",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.2.1",
+    "passport-local": "^1.0.0",
+    "validator": "^5.6.0"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0"
+  }
+}
