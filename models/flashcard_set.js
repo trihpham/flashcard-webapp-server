@@ -20,7 +20,8 @@ const flashcardSetSchema = new Schema({
         minlength: 1,
         trim: true
     },
-    flashcards: [flashcardSchema]
+    flashcards: [flashcardSchema],
+    tags: [String]
 });
 
 flashcardSetSchema.index({

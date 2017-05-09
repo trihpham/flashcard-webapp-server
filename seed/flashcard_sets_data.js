@@ -3,6 +3,7 @@ module.exports = {
         {
             title: "SAT Words",
             description: "a list of frequently used words on the SAT test.",
+            tags: ["SAT", "vocabulary"],
             flashcards: [
                 {
                     term: 'abate',
@@ -86,6 +87,7 @@ module.exports = {
         {
             title: "Web Development Acronyms",
             description: "Learn the common Acronyms that many web developers are supposed to know",
+            tags: ["web acronyms"],
             flashcards: [
                 {
                     term: 'AJAX',

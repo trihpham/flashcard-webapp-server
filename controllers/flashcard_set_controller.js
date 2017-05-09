@@ -8,13 +8,14 @@ module.exports = {
     //FlashcardSet includes [Flashcards]
     create(req, res, next) {
         const userId = req.user._id;
-        const {title, description} = req.body;
+        const {title, description, tags} = req.body;
         const flashcardList = req.body.flashcards;
 
 
         const newflashcardSet = new FlashcardSet({
             title,
             description,
+            tags,
             _creator: userId
         });
 
@@ -58,14 +59,15 @@ module.exports = {
 
     update(req, res, next) {
         const userId = req.user._id;
-        const {title, description, flashcardSetId} = req.body;
+        const {title, description, tags, flashcardSetId} = req.body;
         let flashcardSet;
         FlashcardSet.findOneAndUpdate({
             _creator: userId,
             _id: flashcardSetId
         }, {
             title,
-            description
+            description,
+            tags
         }, {
             new: true
         }).then((updatedDocument) => {

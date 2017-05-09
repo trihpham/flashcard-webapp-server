@@ -1,5 +1,27 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
+const {ObjectID} = require('mongodb');
+const config = require('../config');
+
+const jwt = require('jwt-simple');
+
+const userOneId = new ObjectID();
+let userOneToken = null;
+
+const userTwoId = new ObjectID();
+let userTwoToken = null;
+
+
+function tokenForUser(user) {
+    const timestamp = new Date().getTime();
+    return jwt.encode({
+        sub: user.id,
+        iat: timestamp
+    }, config.secret);
+}
+
+
+
 
 const FlashcardSet = require('../models/flashcard_set');
 const Flashcard = require('../models/flashcard');
@@ -11,6 +33,7 @@ mongoose.connect('mongodb://localhost:27017').then(() => {
 }).then(() => {
 
     const me = new User({
+        _id: userOneId,
         email: "owner@gmail.com",
         password: "myflashcardwebapp",
         firstName: "Tri",
@@ -18,6 +41,7 @@ mongoose.connect('mongodb://localhost:27017').then(() => {
     });
 
     const john = new User({
+        _id: userTwoId,
         email: "johnSmith@gmail.com",
         password: "appleseed",
         firstName: "John",
@@ -28,6 +52,9 @@ mongoose.connect('mongodb://localhost:27017').then(() => {
 }).then(values => {
     const meId = values[0]._id;
     const johnId = values[1]._id;
+
+    userOneToken = tokenForUser(values[0]);
+    userTwoToken = tokenForUser(values[1]);
 
     User.findById(meId).then((user) => {
         const flashcardSet = createFlashcardSet(flashcardSets[0], user._id);
@@ -50,10 +77,11 @@ mongoose.connect('mongodb://localhost:27017').then(() => {
 
 
 const createFlashcardSet = (flashcardSet, userId) => {
-    const {title, description, flashcards} = flashcardSet;
+    const {title, description, flashcards, tags} = flashcardSet;
     const newflashcardSet = new FlashcardSet({
         title,
         description,
+        tags,
         _creator: userId
     });
 
